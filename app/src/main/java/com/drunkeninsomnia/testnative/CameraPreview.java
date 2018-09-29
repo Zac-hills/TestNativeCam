@@ -18,9 +18,11 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     private Thread m_WorkerThread;
     private Activity m_Activity;
     long m_Time;
+    TensorflowInference m_TensorInterface;
 
     public CameraPreview(Context context,Activity a_Activity, Camera camera) {
         super(context);
+        m_TensorInterface = new TensorflowInference(context);
         mCamera = camera;
         // Install a SurfaceHolder.Callback so we get notified when the
         // underlying surface is created and destroyed.
@@ -83,7 +85,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         if(!m_WorkerThread.isAlive())
         {
             Camera.Parameters l_Parameters = camera.getParameters();
-            m_WorkerThread = new Thread(new MyRunnable(m_Activity, data, l_Parameters.getPreviewSize().width, l_Parameters.getPreviewSize().height));
+            m_WorkerThread = new Thread(new MyRunnable(m_Activity, data, l_Parameters.getPreviewSize().width, l_Parameters.getPreviewSize().height, m_TensorInterface));
             m_WorkerThread.start();
         }
     }

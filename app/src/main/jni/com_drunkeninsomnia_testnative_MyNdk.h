@@ -12,7 +12,7 @@ extern "C" {
  * Method:    FindObject
  * Signature: (J)[I
  */
-JNIEXPORT jintArray JNICALL Java_com_drunkeninsomnia_testnative_MyNdk_FindObject
+JNIEXPORT jfloatArray JNICALL Java_com_drunkeninsomnia_testnative_MyNdk_FindObject
   (JNIEnv *, jclass, jlong);
 
 #ifdef __cplusplus

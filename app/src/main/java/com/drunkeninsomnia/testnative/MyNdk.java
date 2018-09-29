@@ -6,5 +6,5 @@ public class MyNdk {
         System.loadLibrary("Threshold");
     }
 
-    public static native int[] FindObject(long a_Img);
+    public static native float[] FindObject(long a_Img);
 }
