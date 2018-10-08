@@ -10,10 +10,10 @@ import org.tensorflow.contrib.android.TensorFlowInferenceInterface;
 
 public class TensorflowInference {
 
-    String m_FileName="file:///android_asset/Striped_Frozen_Graph.pb";
+    String m_FileName="file:///android_asset/optimized_graph.pb";
     TensorFlowInferenceInterface m_TensorflowInference;
     String m_InputName = "Input_Tensor";
-    String[] m_OutputNames = {"softmax_tensor"};
+    String[] m_OutputNames = {"Output_Tensor"};
 
     TensorflowInference(Context a_Context)
     {
@@ -25,14 +25,14 @@ public class TensorflowInference {
         Shape checkShape = InputOperation.output(0).shape();
         //operation name
         final Operation l_Operation = m_TensorflowInference.graphOperation(m_OutputNames[0]);
-        final int l_NumOfClasses = (int)l_Operation.output(0).shape().size(1);
+        final int l_NumOfClasses = (int)l_Operation.output(0).shape().size(0);
         Log.d("Model Info", "Number of output classes: " + l_NumOfClasses);
     }
 
      float[] RunGraph(float[] a_Img)
     {
-        float[] l_Output=new float[2];
-        m_TensorflowInference.feed(m_InputName, a_Img);
+        float[] l_Output=new float[1];
+        m_TensorflowInference.feed(m_InputName, a_Img, 1,224,224,1);
         m_TensorflowInference.run(m_OutputNames);
         m_TensorflowInference.fetch(m_OutputNames[0], l_Output);
         return l_Output;
